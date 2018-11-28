@@ -12,30 +12,23 @@ def close_AA_PRE_And_Launch_AA_PRE():
         
         setAutoWaitTimeout(60)
         
-        print "\n~~~~~~~~Closing Auto creations~~~~~~~~"
-        os.system("sh " + Constants.BatFilesFolder + "Mac_Kill_AA.sh")
-        os.system("sh " + Constants.BatFilesFolder + "Mac_Kill_PRE.sh")
-        os.system("killall 'Terminal'")
-        os.system("open -a Terminal")
-        wait(2)
-        type("N", Key.CMD)
-        keyDown(Key.CMD + Key.SHIFT + Key.LEFT)
-        wait(1)
-        keyUp(Key.CMD + Key.SHIFT + Key.LEFT)
-        type("~/Desktop/LaunchPRE.sh")
-        type(Key.ENTER)
+        print "\n~~~~~~~~Closing Auto creations and PRE application~~~~~~~~"
+        os.system("Taskkill /IM \"Elements Auto Creations 2019.exe\" /F")
+        os.system("Taskkill /IM \"PremiereElementsEditor.exe\" /F")
+        print "~~~~~~~~~~Launching PRE ~~~~~~~~~~~~~~"
         launchAA()
+        openApp(Constants.AppPath_PRE)
         try:
 
                 #setBundlePath(Constants.BaselineFolder)
-                # find(Pattern("Button_GoalScreen_CloseGoalScreen.png").similar(0.80))
-                wait(3)
+                find(Pattern("AddMedia.png").similar(0.80))
+                wait(2)
         except:
                 print("Unable to launch AA application after waiting for 60 seconds. End of execution.")
                 closePRE()
                 sys.exit(0)
 
-        setAutoWaitTimeout(15)
+        setAutoWaitTimeout(60)
 
 def closePRE():
         print "~~~~~~~~Closing any open instance of PRE application~~~~~~~~"
@@ -44,11 +37,12 @@ def closePRE():
 
 def launchAA():
         print "~~~~~~~~~~Launching AA ~~~~~~~~~~~~~~"
-        os.system("open -a Terminal") 
-        type("N", Key.CMD)
-        keyDown(Key.CMD + Key.SHIFT + Key.LEFT)
-        keyUp(Key.CMD + Key.SHIFT + Key.LEFT)
-        type("~/Desktop/LaunchAA.sh")
+        os.chdir("C:\\Users\\nbhushan\\Downloads")
+        type("r", KEY_WIN)
+        type("cmd")
+        type(Key.ENTER) 
+        wait(2)
+        type("\"" + Constants.AAPath + "\" >>UniqueLogs.txt")
         type(Key.ENTER)
         wait(2)
 def findElement( element ):       
