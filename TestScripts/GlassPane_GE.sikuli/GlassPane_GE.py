@@ -40,6 +40,7 @@ class TestGlassPane_GE(unittest.TestCase):
             typeKeys(Constants.CollectionFolder+newfilename)
             type(Key.ENTER)
             wait(3)
+            launchAA()
             clickElement("ToolsIcon.png")
             if Constants.Mode=="Image":
                 clickElement("Pan_and_Zoom.png")
