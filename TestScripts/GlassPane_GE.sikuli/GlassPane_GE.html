@@ -83,11 +83,10 @@ reload(utils)
 
     <span class="kw">def</span> setUp(self):
         close_AA_PRE_And_Launch_AA_PRE()
-        <span class="kw">print</span> <span class="str">"Started..."</span>
+
     <span class="kw">def</span> test_UI_GlassPane_GE(self):
         <span class="skw">wait</span>(<span class="dig">1</span>)
         os.chdir(Constants.CollectionFolder)
-        clickElement(<img src="AddMedia.png" />)
         setAutoWaitTimeout(<span class="dig">60</span>)
         l = os.listdir(Constants.CollectionFolder)
         l.sort()
@@ -97,11 +96,16 @@ reload(utils)
                 <span class="kw">continue</span>
             now = datetime.datetime.now()
             postfix = str(now.day) + str(now.month) + str(now.year) + <span class="str">"_"</span> + str(now.hour) + str(now.minute) + str(now.second)
-            newfilename = <span class="str">"Image#"</span> + str(i) + <span class="str">"_"</span>+ postfix + filename[filename.<span class="skw">find</span>(<span class="str">"."</span>):]
+            <span class="kw">if</span> Constants.Mode==<span class="str">"Image"</span>:
+
+                newfilename = <span class="str">"Image#"</span> + str(i) + <span class="str">"_"</span>+ postfix + filename[filename.<span class="skw">find</span>(<span class="str">"."</span>):]
+            <span class="kw">else</span>:
+                newfilename = <span class="str">"Video#"</span> + str(i) + <span class="str">"_"</span>+ postfix + filename[filename.<span class="skw">find</span>(<span class="str">"."</span>):]
+
             <span class="kw">print</span> <span class="str">"Filename changed from "</span> + filename + <span class="str">" to "</span> + newfilename
             shutil.copy(Constants.CollectionFolder+filename,Constants.CollectionFolder+newfilename)
             os.remove(Constants.CollectionFolder+filename)
-
+            clickElement(<img src="AddMedia.png" />)
             clickElement(<img src="FilesAndFolders.png" />)
             findElement(<img src="TextBox_ImportMediaPath.png" />)
             clickElement(<img src="TextBox_ImportMediaPath.png" />)
@@ -109,12 +113,26 @@ reload(utils)
             <span class="skw">type</span>(Key.ENTER)
             <span class="skw">wait</span>(<span class="dig">3</span>)
             clickElement(<img src="ToolsIcon.png" />)
-            clickElement(<img src="Pan_and_Zoom.png" />)
-            <span class="skw">wait</span>(<span class="dig">5</span>)
-            findElement(<img src="Done.png" />)
-            os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py '"</span> + newfilename + <span class="str">"' "</span> + Constants.Technology)
-            clickElement(<img src="Done.png" />)
-            <span class="skw">wait</span>(<span class="dig">5</span>)
+            <span class="kw">if</span> Constants.Mode==<span class="str">"Image"</span>:
+                clickElement(<img src="Pan_and_Zoom.png" />)
+                <span class="skw">wait</span>(<span class="dig">5</span>)
+                findElement(<img src="Done.png" />)
+                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
+                clickElement(<img src="Done.png" />)
+            <span class="kw">else</span>:
+                clickElement(<img src="SmartTrim.png" />)
+                clickElement(<img src="ShowPresets.png" />)
+                clickElement(<img src="PeoplePreset.png" />)
+                <span class="skw">wait</span>(<span class="dig">2</span>)
+                setAutoWaitTimeout(<span class="dig">900</span>)
+                <span class="skw">find</span>(Pattern(<img src="Playbar.png" />).similar(<span class="dig">0.80</span>))
+                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
+                <span class="skw">click</span>(Pattern(<img src="CloseButton.png" />).similar(<span class="dig">0.90</span>))
+                findElement(<img src="No.png" />)
+                clickElement(<img src="No.png" />)
+                setAutoWaitTimeout(<span class="dig">60</span>)
+            findElement(<img src="AddMedia.png" />)
+            <span class="skw">wait</span>(<span class="dig">3</span>)
             <span class="skw">type</span>(<span class="str">"N"</span>, Key.CTRL)
             findElement(<img src="No.png" />)
             clickElement(<img src="No.png" />)
@@ -124,9 +142,7 @@ reload(utils)
 
             <span class="kw">print</span> <span class="str">"Completed screenshot taking process for file: "</span> + newfilename
             i = i+<span class="dig">1</span>
-            <span class="kw">if</span> Constants.Technology==<span class="str">"Mona"</span>:
-                os.system(<span class="str">"killall 'Elements Auto Creations 2019'"</span>)
-                <span class="skw">wait</span>(<span class="dig">2</span>)
+            <span class="skw">wait</span>(<span class="dig">2</span>)
     <span class="kw">def</span> tearDown(self):
        closePRE()
 </pre>

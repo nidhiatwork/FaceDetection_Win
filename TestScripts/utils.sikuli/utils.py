@@ -15,9 +15,12 @@ def close_AA_PRE_And_Launch_AA_PRE():
         print "\n~~~~~~~~Closing Auto creations and PRE application~~~~~~~~"
         os.system("Taskkill /IM \"Elements Auto Creations 2019.exe\" /F")
         os.system("Taskkill /IM \"PremiereElementsEditor.exe\" /F")
-        print "~~~~~~~~~~Launching PRE ~~~~~~~~~~~~~~"
         launchAA()
-        openApp(Constants.AppPath_PRE)
+        print "~~~~~~~~~~Launching PRE ~~~~~~~~~~~~~~"
+        if Constants.Technology=="Mona":
+                openApp(Constants.AppPath_PRE_FD)
+        else:
+                openApp(Constants.AppPath_PRE)
         try:
 
                 #setBundlePath(Constants.BaselineFolder)
@@ -37,18 +40,24 @@ def closePRE():
 
 def launchAA():
         print "~~~~~~~~~~Launching AA ~~~~~~~~~~~~~~"
-        os.chdir("C:\\Users\\nbhushan\\Downloads")
-        type("r", KEY_WIN)
-        type("cmd")
-        type(Key.ENTER) 
+        if Constants.Technology=="Mona":
+                os.chdir("C:\\Users\\nbhushan\\Downloads")
+                type("r", KEY_WIN)
+                type("cmd")
+                type(Key.ENTER)
+                wait(2)
+                type("\"" + Constants.AAPath_FD + "\" >>UniqueLogs.txt")
+                type(Key.ENTER)
+                type("exit")
+                type(Key.ENTER)
+
+        else:
+                openApp(Constants.AAPath)
         wait(2)
-        type("\"" + Constants.AAPath + "\" >>UniqueLogs.txt")
-        type(Key.ENTER)
-        wait(2)
+        
 def findElement( element ):       
         print "Finding element: " + str(element)
         try:
-                
                 find(element)
         except:
                 stack = traceback.extract_stack(limit = 2)
