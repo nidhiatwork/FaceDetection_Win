@@ -53,7 +53,8 @@ class TestGlassPane_GE(unittest.TestCase):
                 clickElement("PeoplePreset.png")
                 wait(2)
                 setAutoWaitTimeout(900)
-                findElement(Pattern("CloseButton.png").similar(0.80))
+                findElement(Pattern("HidePresets.png").similar(0.90))
+                
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)                
                 clickElement(Pattern("CloseButton.png").similar(0.90))
                 findElement("No.png")
