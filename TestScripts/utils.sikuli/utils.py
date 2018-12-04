@@ -50,7 +50,6 @@ def launchAA():
                 type(Key.ENTER)
                 type("exit")
                 type(Key.ENTER)
-
         else:
                 openApp(Constants.AAPath)
         wait(2)

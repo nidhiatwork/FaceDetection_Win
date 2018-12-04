@@ -41,7 +41,26 @@ class TestPRE_FaceDetection(unittest.TestCase):
             type(Key.ENTER)
             wait(3)
             launchAA()
+            setAutoWaitTimeout(5)
+
+            if exists(Pattern("AddMedia.png").similar(0.99)):
+                print "Media imported successfully"
+            
+            elif exists("Import_Generic_Error.png"):
+                print "Importer error occurred. Skip current media file."
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology) 
+                print "Completed screenshot taking process for file: " + filename
+                type(Key.ESC)
+                wait(1)
+                findElement("AddMedia.png")
+                wait(3)
+                os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
+                i = i+1
+                continue
+
             clickElement("ToolsIcon.png")
+            setAutoWaitTimeout(60)
+
             if Constants.Mode=="Image":
                 clickElement("Pan_and_Zoom.png")
                 wait(5)
@@ -53,12 +72,13 @@ class TestPRE_FaceDetection(unittest.TestCase):
                     wait(1)
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)              
                 clickElement("Done.png")
+            
             else:
                 clickElement("SmartTrim.png")
                 clickElement("ShowPresets.png")
                 clickElement("PeoplePreset.png")
                 wait(2)
-                setAutoWaitTimeout(900)
+                setAutoWaitTimeout(3600)
                 findElement(Pattern("HidePresets.png").similar(0.90))
                 
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)                
@@ -66,6 +86,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 findElement("No.png")
                 clickElement("No.png")
                 setAutoWaitTimeout(60)
+            
             findElement("AddMedia.png")
             wait(3)
             type("N", Key.CTRL)
@@ -74,9 +95,11 @@ class TestPRE_FaceDetection(unittest.TestCase):
             wait(2)
             findElement("Cancel.png")
             clickElement("Cancel.png")
-         
-            print "Completed screenshot taking process for file: " + newfilename
+            print "Completed screenshot taking process for file: " + filename
+            os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
             i = i+1
             wait(2)
+                        
+            
     def tearDown(self):
        closePRE()

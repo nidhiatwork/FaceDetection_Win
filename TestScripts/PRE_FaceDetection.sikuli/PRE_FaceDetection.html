@@ -79,18 +79,18 @@ reload(utils)
 <span class="kw">import</span> shutil
 <span class="kw">import</span> datetime
 
-<span class="kw">class</span> TestGlassPane_GE(unittest.TestCase):
+<span class="kw">class</span> TestPRE_FaceDetection(unittest.TestCase):
 
     <span class="kw">def</span> setUp(self):
         close_AA_PRE_And_Launch_AA_PRE()
 
-    <span class="kw">def</span> test_UI_GlassPane_GE(self):
+    <span class="kw">def</span> test_UI_FaceDetection(self):
         <span class="skw">wait</span>(<span class="dig">1</span>)
         os.chdir(Constants.CollectionFolder)
         setAutoWaitTimeout(<span class="dig">60</span>)
         l = os.listdir(Constants.CollectionFolder)
         l.sort()
-        i=<span class="dig">29</span>
+        i=<span class="dig">1</span>
         <span class="kw">for</span> filename <span class="kw">in</span> l:
             <span class="kw">if</span> filename.<span class="skw">find</span>(<span class="str">"."</span>)==<span class="dig">0</span>:
                 <span class="kw">continue</span>
@@ -150,6 +150,12 @@ reload(utils)
             <span class="kw">print</span> <span class="str">"Completed screenshot taking process for file: "</span> + newfilename
             i = i+<span class="dig">1</span>
             <span class="skw">wait</span>(<span class="dig">2</span>)
+
+            <span class="skw">wait</span>(<img src="Import_Generic_Error.png" />)
+            <span class="skw">wait</span>(<img src="Error_OK.png" />)
+
+
+
     <span class="kw">def</span> tearDown(self):
        closePRE()
 </pre>
