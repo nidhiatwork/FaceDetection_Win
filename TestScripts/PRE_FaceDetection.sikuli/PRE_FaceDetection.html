@@ -67,7 +67,7 @@
    </head>
 <body>
 <div class="info">
-<h2>GlassPane_GE.sikuli</h2> <a href="GlassPane_GE.zip">(Download this script)</a>
+<h2>PRE_FaceDetection.sikuli</h2> <a href="PRE_FaceDetection.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
 <span class="kw">import</span> utils
@@ -90,7 +90,7 @@ reload(utils)
         setAutoWaitTimeout(<span class="dig">60</span>)
         l = os.listdir(Constants.CollectionFolder)
         l.sort()
-        i=<span class="dig">1</span>
+        i=<span class="dig">29</span>
         <span class="kw">for</span> filename <span class="kw">in</span> l:
             <span class="kw">if</span> filename.<span class="skw">find</span>(<span class="str">"."</span>)==<span class="dig">0</span>:
                 <span class="kw">continue</span>
@@ -112,11 +112,17 @@ reload(utils)
             typeKeys(Constants.CollectionFolder+newfilename)
             <span class="skw">type</span>(Key.ENTER)
             <span class="skw">wait</span>(<span class="dig">3</span>)
+            launchAA()
             clickElement(<img src="ToolsIcon.png" />)
             <span class="kw">if</span> Constants.Mode==<span class="str">"Image"</span>:
                 clickElement(<img src="Pan_and_Zoom.png" />)
                 <span class="skw">wait</span>(<span class="dig">5</span>)
-                findElement(<img src="Done.png" />)
+                setAutoWaitTimeout(<span class="dig">15</span>)
+                <span class="kw">if</span> exists(<img src="Done.png" />):
+                    <span class="kw">print</span> <span class="str">"Pan and Zoom screen appeared."</span>
+                <span class="kw">elif</span> exists(<img src="PanandZoomError.png" />):
+                    clickElement(<img src="Ok_error.png" />)
+                    <span class="skw">wait</span>(<span class="dig">1</span>)
                 os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
                 clickElement(<img src="Done.png" />)
             <span class="kw">else</span>:
@@ -125,7 +131,7 @@ reload(utils)
                 clickElement(<img src="PeoplePreset.png" />)
                 <span class="skw">wait</span>(<span class="dig">2</span>)
                 setAutoWaitTimeout(<span class="dig">900</span>)
-                <span class="skw">wait</span>(Pattern(<img src="HidePresets.png" />).similar(<span class="dig">0.90</span>))
+                findElement(Pattern(<img src="HidePresets.png" />).similar(<span class="dig">0.90</span>))
 
                 os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
                 clickElement(Pattern(<img src="CloseButton.png" />).similar(<span class="dig">0.90</span>))

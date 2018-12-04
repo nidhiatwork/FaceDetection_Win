@@ -7,12 +7,12 @@ import unittest
 import shutil
 import datetime
 
-class TestGlassPane_GE(unittest.TestCase):
+class TestPRE_FaceDetection(unittest.TestCase):
 
     def setUp(self):
         close_AA_PRE_And_Launch_AA_PRE()
 
-    def test_UI_GlassPane_GE(self):
+    def test_UI_FaceDetection(self):
         wait(1)
         os.chdir(Constants.CollectionFolder)
         setAutoWaitTimeout(60)
@@ -45,8 +45,13 @@ class TestGlassPane_GE(unittest.TestCase):
             if Constants.Mode=="Image":
                 clickElement("Pan_and_Zoom.png")
                 wait(5)
-                findElement("Done.png")
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)
+                setAutoWaitTimeout(15)
+                if exists("Done.png"):
+                    print "Pan and Zoom screen appeared."
+                elif exists("PanandZoomError.png"):
+                    clickElement("Ok_error.png")
+                    wait(1)
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)              
                 clickElement("Done.png")
             else:
                 clickElement("SmartTrim.png")
