@@ -24,8 +24,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 continue
             now = datetime.datetime.now()
             postfix = str(now.day) + str(now.month) + str(now.year) + "_" + str(now.hour) + str(now.minute) + str(now.second)
-            if Constants.Mode=="Image":
-
+            if Mode=="Image":
                 newfilename = "Image#" + str(i) + "_"+ postfix + filename[filename.find("."):]
             else:
                 newfilename = "Video#" + str(i) + "_"+ postfix + filename[filename.find("."):]
@@ -48,7 +47,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             
             elif exists("Import_Generic_Error.png"):
                 print "Importer error occurred. Skip current media file."
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology) 
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Technology) 
                 print "Completed screenshot taking process for file: " + filename
                 type(Key.ESC)
                 wait(1)
@@ -61,7 +60,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
             clickElement("ToolsIcon.png")
             setAutoWaitTimeout(60)
 
-            if Constants.Mode=="Image":
+            if Mode=="Image":
                 clickElement("Pan_and_Zoom.png")
                 wait(5)
                 setAutoWaitTimeout(15)
@@ -70,7 +69,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 elif exists("PanandZoomError.png"):
                     clickElement("Ok_error.png")
                     wait(1)
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)              
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Technology)              
                 clickElement("Done.png")
             
             else:
@@ -81,7 +80,7 @@ class TestPRE_FaceDetection(unittest.TestCase):
                 setAutoWaitTimeout(3600)
                 findElement(Pattern("HidePresets.png").similar(0.90))
                 
-                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Constants.Technology)                
+                os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Technology)                
                 clickElement(Pattern("CloseButton.png").similar(0.90))
                 findElement("No.png")
                 clickElement("No.png")
