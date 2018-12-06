@@ -95,10 +95,9 @@ class TestPRE_FaceDetection(unittest.TestCase):
             findElement("Cancel.png")
             clickElement("Cancel.png")
             print "Completed screenshot taking process for file: " + filename
-            os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
             i = i+1
             wait(2)
-                        
+            
             
     def tearDown(self):
        closePRE()
