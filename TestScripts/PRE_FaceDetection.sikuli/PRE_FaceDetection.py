@@ -42,10 +42,10 @@ class TestPRE_FaceDetection(unittest.TestCase):
             launchAA()
             setAutoWaitTimeout(5)
 
-            if exists(Pattern("AddMedia.png").similar(0.99)):
+            if exists(Pattern("AddMedia.png").exact()):
                 print "Media imported successfully"
             
-            elif exists("Import_Generic_Error.png"):
+            elif exists(Pattern("AddMediaFail.png").similar(0.90)):
                 print "Importer error occurred. Skip current media file."
                 os.system("python " + Constants.BatFilesFolder + "TakeScreenshot.py " + newfilename + " " + Technology) 
                 print "Completed screenshot taking process for file: " + filename

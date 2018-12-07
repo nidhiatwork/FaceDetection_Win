@@ -96,8 +96,7 @@ reload(utils)
                 <span class="kw">continue</span>
             now = datetime.datetime.now()
             postfix = str(now.day) + str(now.month) + str(now.year) + <span class="str">"_"</span> + str(now.hour) + str(now.minute) + str(now.second)
-            <span class="kw">if</span> Constants.Mode==<span class="str">"Image"</span>:
-
+            <span class="kw">if</span> Mode==<span class="str">"Image"</span>:
                 newfilename = <span class="str">"Image#"</span> + str(i) + <span class="str">"_"</span>+ postfix + filename[filename.<span class="skw">find</span>(<span class="str">"."</span>):]
             <span class="kw">else</span>:
                 newfilename = <span class="str">"Video#"</span> + str(i) + <span class="str">"_"</span>+ postfix + filename[filename.<span class="skw">find</span>(<span class="str">"."</span>):]
@@ -113,8 +112,27 @@ reload(utils)
             <span class="skw">type</span>(Key.ENTER)
             <span class="skw">wait</span>(<span class="dig">3</span>)
             launchAA()
+            setAutoWaitTimeout(<span class="dig">5</span>)
+
+            <span class="kw">if</span> exists(Pattern(<img src="AddMedia.png" />).exact()):
+                <span class="kw">print</span> <span class="str">"Media imported successfully"</span>
+
+            <span class="kw">elif</span> exists(Pattern(<img src="AddMediaFail.png" />).similar(<span class="dig">0.90</span>)):
+                <span class="kw">print</span> <span class="str">"Importer error occurred. Skip current media file."</span>
+                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Technology)
+                <span class="kw">print</span> <span class="str">"Completed screenshot taking process for file: "</span> + filename
+                <span class="skw">type</span>(Key.ESC)
+                <span class="skw">wait</span>(<span class="dig">1</span>)
+                findElement(<img src="AddMedia.png" />)
+                <span class="skw">wait</span>(<span class="dig">3</span>)
+                os.rename(Constants.CollectionFolder+newfilename,Constants.CollectionFolder+filename)
+                i = i+<span class="dig">1</span>
+                <span class="kw">continue</span>
+
             clickElement(<img src="ToolsIcon.png" />)
-            <span class="kw">if</span> Constants.Mode==<span class="str">"Image"</span>:
+            setAutoWaitTimeout(<span class="dig">60</span>)
+
+            <span class="kw">if</span> Mode==<span class="str">"Image"</span>:
                 clickElement(<img src="Pan_and_Zoom.png" />)
                 <span class="skw">wait</span>(<span class="dig">5</span>)
                 setAutoWaitTimeout(<span class="dig">15</span>)
@@ -123,21 +141,23 @@ reload(utils)
                 <span class="kw">elif</span> exists(<img src="PanandZoomError.png" />):
                     clickElement(<img src="Ok_error.png" />)
                     <span class="skw">wait</span>(<span class="dig">1</span>)
-                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
+                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Technology)
                 clickElement(<img src="Done.png" />)
+
             <span class="kw">else</span>:
                 clickElement(<img src="SmartTrim.png" />)
                 clickElement(<img src="ShowPresets.png" />)
                 clickElement(<img src="PeoplePreset.png" />)
                 <span class="skw">wait</span>(<span class="dig">2</span>)
-                setAutoWaitTimeout(<span class="dig">900</span>)
+                setAutoWaitTimeout(<span class="dig">3600</span>)
                 findElement(Pattern(<img src="HidePresets.png" />).similar(<span class="dig">0.90</span>))
 
-                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Constants.Technology)
+                os.system(<span class="str">"python "</span> + Constants.BatFilesFolder + <span class="str">"TakeScreenshot.py "</span> + newfilename + <span class="str">" "</span> + Technology)
                 clickElement(Pattern(<img src="CloseButton.png" />).similar(<span class="dig">0.90</span>))
                 findElement(<img src="No.png" />)
                 clickElement(<img src="No.png" />)
                 setAutoWaitTimeout(<span class="dig">60</span>)
+
             findElement(<img src="AddMedia.png" />)
             <span class="skw">wait</span>(<span class="dig">3</span>)
             <span class="skw">type</span>(<span class="str">"N"</span>, Key.CTRL)
@@ -146,14 +166,9 @@ reload(utils)
             <span class="skw">wait</span>(<span class="dig">2</span>)
             findElement(<img src="Cancel.png" />)
             clickElement(<img src="Cancel.png" />)
-
-            <span class="kw">print</span> <span class="str">"Completed screenshot taking process for file: "</span> + newfilename
+            <span class="kw">print</span> <span class="str">"Completed screenshot taking process for file: "</span> + filename
             i = i+<span class="dig">1</span>
             <span class="skw">wait</span>(<span class="dig">2</span>)
-
-            <span class="skw">wait</span>(<img src="Import_Generic_Error.png" />)
-            <span class="skw">wait</span>(<img src="Error_OK.png" />)
-
 
 
     <span class="kw">def</span> tearDown(self):
